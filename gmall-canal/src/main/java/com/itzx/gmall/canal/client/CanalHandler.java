@@ -28,11 +28,10 @@ public class CanalHandler {
     public void handle() {
         // 下单操作
         if ("order_info".equals(tableName) && CanalEntry.EventType.INSERT == eventType) {
-            rowDateList2Kafka("");
+            rowDateList2Kafka(GmallConstant.KAFKA_TOPIC_ORDER);
         } else if ("user_info".equals(tableName) && (CanalEntry.EventType.INSERT == eventType || CanalEntry.EventType.UPDATE == eventType)) {
-            rowDateList2Kafka("");
+            rowDateList2Kafka(GmallConstant.KAFKA_TOPIC_USER);
         }
-
     }
 
     public void rowDateList2Kafka(String kafkaTopic) {

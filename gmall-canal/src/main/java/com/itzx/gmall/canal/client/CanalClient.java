@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class CanalClient {
 
-    public void watch(String hostname,int port,String destination ,String tables) {
+    public void watch(String hostname, int port, String destination, String tables) {
         // 连接
-        CanalConnector canalConnector = 
+        CanalConnector canalConnector =
                 CanalConnectors.newSingleConnector(new InetSocketAddress(hostname, port), destination, "", "");
         while (true) {
             canalConnector.connect();
@@ -33,10 +33,14 @@ public class CanalClient {
                     e.printStackTrace();
                 }
             } else {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                // 抓取数据后,提取数据
+                // 一个entry 代表一个sql执行的结果集
                 for (CanalEntry.Entry entry : message.getEntries()) {
                     if (entry.getEntryType() == CanalEntry.EntryType.ROWDATA) {
                         CanalEntry.RowChange rowChange = null;
                         try {
+                            // 反序列化工具, 业务数据 StoreValue
                             rowChange = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
                         } catch (InvalidProtocolBufferException e) {
                             e.printStackTrace();
@@ -50,10 +54,7 @@ public class CanalClient {
                     }
                 }
             }
-
         }
-        
-        
-        
+
     }
 }

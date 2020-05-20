@@ -1,6 +1,7 @@
 package com.itzx.gmall.publisher.service.impl;
 
 import com.itzx.gmall.publisher.mapper.DauMapper;
+import com.itzx.gmall.publisher.mapper.OrderMapper;
 import com.itzx.gmall.publisher.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class PublisherServiceImpl implements PublisherService {
     @Autowired
     DauMapper dauMapper;
 
+    @Autowired
+    OrderMapper orderMapper;
+
     @Override
     public Long getDauTotal(String date) {
         return dauMapper.selectDauTotal(date);
@@ -35,5 +39,21 @@ public class PublisherServiceImpl implements PublisherService {
             dauMap.put(lh, ct);
         }
         return dauMap;
+    }
+
+    @Override
+    public Double getOrderAmount(String date) {
+        return orderMapper.selectOrderAmount(date);
+    }
+
+    @Override
+    public Map<String, Double> getOrderAmountHours(String date) {
+
+        HashMap<String, Double> hourMap = new HashMap<>();
+        final List<Map> mapList = orderMapper.selectOrderAmountHour(date);
+        for (Map map : mapList) {
+            hourMap.put((String) map.get("C_HOUR"), (Double) map.get("AMOUNT"));
+        }
+        return hourMap;
     }
 }

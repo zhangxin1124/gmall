@@ -9,4 +9,7 @@ public class GmallConstant {
     public static final String KAFKA_STARTUP = "GMALL_STARTUP";
     public static final String KAFKA_EVENT = "GMALL_EVENT";
 
+    public static String KAFKA_TOPIC_ORDER = "ORDER_INFO";
+    public static String KAFKA_TOPIC_USER = "USER_INFO";
+
 }
